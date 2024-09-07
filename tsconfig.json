@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS", // Set module system to `CommonJS`
+    "esModuleInterop": true, // Allow default import from module that export using `module.exports`
+    "target": "es6", // Target to compile JavaScript
+    "moduleResolution": "Node", // Tell TypeScript, using node.js to resolution algorith
+    "sourceMap": true, // Enable source map generation for ez debug
+    "rootDir": "./src", //
+    "strict": true, // Enable all strict type-checking
+    "experimentalDecorators": true, // Allow use experimental decorators
+    "emitDecoratorMetadata": true, //Emits metadata for decorators used in the project.
+    "resolveJsonModule": true, // Allow import JSON file as module
+    "noImplicitAny": true, // Prevent TypeScript from inferring the `any` type unless explicilty define, helping ensure type safety
+    "noUnusedLocals": true, //Throws an error if there are any local variables that are declared but not used in the code.
+    "noUnusedParameters": true, // Throw an error if there are any unused function parameter
+    "alwaysStrict": true, //Ensures that the "use strict" directive is added to every file
+    "pretty": true // Ensures the TypeScript compiler output is more readable and user-friendly.
+  },
+  "include": ["src/**/*"], //Includes all files inside the `src` folder
+  "exclude": ["node_modules", "**/*.spec.ts"] //Excludes the node_modules directory and all .spec.ts test files from the TypeScript compilation.
+}
