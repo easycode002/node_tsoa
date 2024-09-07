@@ -1,7 +1,7 @@
-const esbuild = require('esbuild');
-const path = require('path');
-const fs = require('fs-extra');
-const copy = require('esbuild-plugin-copy').default;
+const esbuild = require("esbuild");
+const path = require("path");
+const fs = require("fs-extra");
+const copy = require("esbuild-plugin-copy").default;
 
 // Issure
 // 1. Esbuild could not load swagger.json
@@ -17,32 +17,24 @@ esbuild
     loader: {
       ".ts": "ts",
     },
+    // (2) Solve: https://stackoverflow.com/questions/62136515/swagger-ui-express-plugin-issue-with-webpack-bundling-in-production-mode/63048697#63048697
     plugins: [
-      // (2) Solve: https://stackoverflow.com/questions/62136515/swagger-ui-express-plugin-issue-with-webpack-bundling-in-production-mode/63048697#63048697
       copy({
         assets: [
+          // Copy swagger UI assets and env file
+          { from: "../node_modules/swagger-ui-dist/*", to: "./" },
           {
-            from: `../node_modules/swagger-ui-dist/*.css`,
-            to: './',
-          },
-          {
-            from: `../node_modules/swagger-ui-dist/*.js`,
-            to: './',
-          },
-          {
-            from: `../node_modules/swagger-ui-dist/*.png`,
-            to: './',
-          },
-          {
-            from: './src/configs/.env.local',
-            to: './configs',
+            from: "./src/configs/.env.local",
+            to: "./configs/.env.development",
           },
         ],
       }),
     ],
     resolveExtensions: [".ts", ".js"],
     define: {
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development'),
+      "process.env.NODE_ENV": JSON.stringify(
+        process.env.NODE_ENV || "development"
+      ),
     },
     // Add this so that It could resolve the path
     alias: {

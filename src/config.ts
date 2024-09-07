@@ -13,9 +13,9 @@ type Config = {
 function loadConfig(): Config {
   // Determine the env and set the appropriate .env file
   const env = process.env.NODE_ENV || "development";
-  console.log(process.env);
   const envPath = path.resolve(__dirname, `./configs/.env.${env}`);
-  console.log(`Loading environment from: ${envPath}`);
+  console.log(`Loading env from: ${envPath}`);
+
   dotenv.config({ path: envPath });
 
   // Define a schema for env varaible
