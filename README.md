@@ -135,7 +135,7 @@ yarn dev
 #### 5.Live Reloading Code
 
 > [!NOTE]
-> By default when we made change in our application code, we need to close the process of our application `ctrl+c` and return `yarn dev` > _Soluttion_ : Install `nodemon` for watcing file made change:
+> By default when we made change in our application code, we need to close the process of our application `ctrl+c` and return `yarn dev` _Soluttion_ : Install `nodemon` for watcing file made change:
 
 ```bash
 # Nodemon, only use in development mode
