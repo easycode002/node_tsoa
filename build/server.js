@@ -22,9 +22,15 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// src/server.ts
+// src/app.ts
 var import_express = __toESM(require("express"));
 var app = (0, import_express.default)();
-app.listen(3e3, () => {
-  console.log(`Server is running on port:`, 3e3);
-});
+var app_default = app;
+
+// src/server.ts
+function run() {
+  app_default.listen(3e3, () => {
+    console.log(`Server is running on port:`, 3e3);
+  });
+}
+run();

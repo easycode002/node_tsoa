@@ -6,6 +6,7 @@
     "moduleResolution": "Node", // Tell TypeScript, using node.js to resolution algorith
     "sourceMap": true, // Enable source map generation for ez debug
     "rootDir": "./src", //
+    "outDir": "./build",
     "strict": true, // Enable all strict type-checking
     "experimentalDecorators": true, // Allow use experimental decorators
     "emitDecoratorMetadata": true, //Emits metadata for decorators used in the project.
@@ -14,8 +15,17 @@
     "noUnusedLocals": true, //Throws an error if there are any local variables that are declared but not used in the code.
     "noUnusedParameters": true, // Throw an error if there are any unused function parameter
     "alwaysStrict": true, //Ensures that the "use strict" directive is added to every file
-    "pretty": true // Ensures the TypeScript compiler output is more readable and user-friendly.
+    "pretty": true, // Ensures the TypeScript compiler output is more readable and user-friendly.
+    // Import file from the root directory using `@` prefix
+    "baseUrl": "./src", // Added: New
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": ["src/**/*"], //Includes all files inside the `src` folder
-  "exclude": ["node_modules", "**/*.spec.ts"] //Excludes the node_modules directory and all .spec.ts test files from the TypeScript compilation.
+  "exclude": ["node_modules", "**/*.spec.ts"], //Excludes the node_modules directory and all .spec.ts test files from the TypeScript compilation.
+  // Allow ts-node to run with tsconfig-paths
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

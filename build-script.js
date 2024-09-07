@@ -16,6 +16,10 @@ esbuild
     define: {
       "process.env.NODE_ENV": '"production"', // This env will avaibale in our application process
     },
+    // Add this so that It could resolve the path
+    alias: {
+      "@": path.resolve(__dirname, "."),
+    },
   })
   .catch((error) => {
     console.error(`Build failed:`, error);
