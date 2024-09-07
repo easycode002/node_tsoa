@@ -20,19 +20,29 @@ esbuild
     plugins: [
       // (2) Solve: https://stackoverflow.com/questions/62136515/swagger-ui-express-plugin-issue-with-webpack-bundling-in-production-mode/63048697#63048697
       copy({
-        assets: {
-          from: [
-            "../node_modules/swagger-ui-dist/*.css",
-            "../node_modules/swagger-ui-dist/*.js",
-            "../node_modules/swagger-ui-dist/*.png",
-          ],
-          to: ["./"],
-        },
+        assets: [
+          {
+            from: `../node_modules/swagger-ui-dist/*.css`,
+            to: './',
+          },
+          {
+            from: `../node_modules/swagger-ui-dist/*.js`,
+            to: './',
+          },
+          {
+            from: `../node_modules/swagger-ui-dist/*.png`,
+            to: './',
+          },
+          {
+            from: './src/configs/.env.local',
+            to: './configs',
+          },
+        ],
       }),
     ],
     resolveExtensions: [".ts", ".js"],
     define: {
-      "process.env.NODE_ENV": '"production"', // This env will avaibale in our application process
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development'),
     },
     // Add this so that It could resolve the path
     alias: {

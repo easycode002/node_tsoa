@@ -536,3 +536,88 @@ esbuild
     process.exit(1);
   });
 ```
+
+#### 9. Dotenv
+
+Some sensitive value like `MONGO_URL`, `SECRET_KEY`, etc should be store in `.env` file. To load those value we need to use `dotenv`
+Install:
+
+```bash
+yarn add dotenv joi
+```
+
+- `dotenv` : for store sensitive value.
+- `joi` : for load content from `dotenv` file.
+  Create a file called: `.env.development` in `configs` folder:
+
+```bash
+# Port API Service to run:
+PORT=3000
+
+NODE_ENV=development
+
+MONGODB_URL=mongodb://localhost:27017/mydatabase
+```
+Create a file called: `config.ts` inside `src`:
+```bash
+import dotenv from "dotenv";
+import path from "path";
+import Joi from "joi";
+
+// Define type for load content from .env file
+type Config = {
+  env: string;
+  port: number;
+  mongodbUrl: string;
+};
+
+// Function to load and validate env variable
+function loadConfig(): Config {
+  // Determine the env and set the appropriate .env file
+  const env = process.env.NODE_ENV || "development";
+  const envPath = path.resolve(__dirname, `./configs/.env.${env}`);
+  dotenv.config({ path: envPath });
+
+  // Define a schema for env varaible
+  const envVarsSchema = Joi.object({
+    NODE_ENV: Joi.string().required(),
+    PORT: Joi.number().default(3000),
+    MONGODB_URL: Joi.string().required(),
+  })
+    .unknown()
+    .required();
+
+  // Validate the env varaible
+  const { value: envVars, error } = envVarsSchema.validate(process.env);
+  if (error) {
+    throw new Error(`Config validation error: ${error.message}`);
+  }
+
+  return {
+    env: envVars.NODE_ENV,
+    port: envVars.PORT,
+    mongodbUrl: envVars.MONGODB_URL,
+  };
+}
+
+// Export the load config
+const configs = loadConfig();
+export default configs;
+```
+Call `configs` to use in `server.ts`
+```bash
+import app from "@/app";
+import configs from "@/config";
+
+function run() {
+  app.listen(configs.port, () => {
+    console.log(`Server is running on http://localhost:${configs.port}`);
+  });
+}
+
+run();
+```
+
+##### Problem in Production Local Code (Esbuild)
+ - Inside the `build` folder, there is no `.env file` to load during application running.
+ - Solution: Copy the `configs` folder to the `build` folder. ***Noted*** we need to defferent file env for defferent env, in this case we use `.env.local`
