@@ -40,6 +40,6 @@ function loadConfig(): Config {
   };
 }
 
-// Export the load config
+// Export the load configs from env
 const configs = loadConfig();
 export default configs;
