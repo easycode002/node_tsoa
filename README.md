@@ -429,8 +429,10 @@ yarn tsoa:gen
 ```
 
 ##### Render `swagger.json` to Interface or UI
+
 Config this inside `app.ts`
-```bash
+
+```bashs
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "@/routes/v1/routes";
@@ -465,3 +467,72 @@ export default app;
 ```
 
 Run `yarn dev` and access to `http://localhost:3000/api-docs/` in browser
+
+##### For production (Esbuild)
+
+Problem:
+
+1.  Foder docs contains file `swagger.json` which **esbuild** is not responsible for bundle
+    - _Solotion_ : Copy the `docs` folder into `build` folder
+2.  SwaggerUIBunder is not define in production - Copy some asset file like html, css of swagger-ui-express into `build` folder
+    Inside `build-script.js`
+
+```bash
+yarn add esbuild-plugin-copy --dev
+```
+
+```bash
+const esbuild = require('esbuild');
+const path = require('path');
+const fs = require('fs-extra');
+const copy = require('esbuild-plugin-copy').default;
+
+// Issure
+// 1. Esbuild could not load swagger.json
+// 2. SwaggerUIBundle is not define in production.
+esbuild
+  .build({
+    entryPoints: ["src/server.ts"],
+    bundle: true,
+    platform: "node",
+    target: "node20",
+    outdir: "build",
+    external: ["express"],
+    loader: {
+      ".ts": "ts",
+    },
+    plugins: [
+      // (2) Solve: https://stackoverflow.com/questions/62136515/swagger-ui-express-plugin-issue-with-webpack-bundling-in-production-mode/63048697#63048697
+      copy({
+        assets: {
+          from: [
+            "../node_modules/swagger-ui-dist/*.css",
+            "../node_modules/swagger-ui-dist/*.js",
+            "../node_modules/swagger-ui-dist/*.png",
+          ],
+          to: ["./"],
+        },
+      }),
+    ],
+    resolveExtensions: [".ts", ".js"],
+    define: {
+      "process.env.NODE_ENV": '"production"', // This env will avaibale in our application process
+    },
+    // Add this so that It could resolve the path
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  })
+  .then(() => {
+    // (1) Solve: Copy swagger.json after successful build
+    fs.copySync(
+      path.resolve(__dirname, "src/docs/swagger.json"),
+      path.resolve(__dirname, "build/docs/swagger.json")
+    );
+    console.log("Swagger JSON copied successfully!");
+  })
+  .catch((error) => {
+    console.error(`Build failed:`, error);
+    process.exit(1);
+  });
+```
