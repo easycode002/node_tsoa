@@ -1,10 +1,18 @@
 import app from "@/app";
+import connectToMongoDB from "@/database/connection";
 import configs from "@/config";
 
-function run() {
-  app.listen(configs.port, () => {
-    console.log(`Server is running on http://localhost:${configs.port}`);
-  });
+async function run() {
+  try {
+    await connectToMongoDB();
+
+    app.listen(configs.port, () => {
+      console.log(`Server runnint on http://localhost:3000`);
+    });
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 }
 
 run();
