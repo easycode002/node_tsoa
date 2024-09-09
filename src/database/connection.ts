@@ -8,9 +8,9 @@ async function connectToMongoDB() {
         console.log(`MongoDB is connected!`)
     }   catch(error){
         console.error(`connectToMongoDB method error:`,error)
+        throw error;
     } 
 }
-
 
 // Export function
 export default connectToMongoDB;

@@ -1,8 +1,8 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-import { RegisterRoutes } from "@/routes/v1/routes";
 import fs from "fs";
 import path from "path";
+import { RegisterRoutes } from "./routes/v1/routes";
 
 // Dynamically load swagger.json
 const swaggerDocument = JSON.parse(
@@ -23,6 +23,7 @@ app.use(express.json()); // Help to get the json from request body
 //  Global API V1
 // =============================================
 RegisterRoutes(app);
+app.use(RegisterRoutes);
 
 // ========================
 // API Documentations

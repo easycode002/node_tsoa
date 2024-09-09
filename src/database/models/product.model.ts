@@ -1,20 +1,19 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
 
-// Interface to describe a single document
+// Define interface for Item Product
 export interface IItem {
   name: string;
   category: string;
   price: number;
 }
 
-// Schema defination
-const itemSchema = new Schema({
-  name: { type: String, require: true },
+// Schema Information
+const itemSchema = new Schema<IItem>({
+  name: { type: String, require: true, unique: true },
   category: { type: String, require: true },
-  price: { type: String, require: true },
+  price: { type: Number, require: true },
 });
 
-// Create a model for the schema
+// Create a model from itemSchema.
 const ItemModel = model<IItem>("item", itemSchema);
-
 export default ItemModel;
