@@ -1,4 +1,4 @@
-import ItemModel, { IItem } from "@/database/product.model";
+import ItemModel, { IItem } from "@/database/models/product.model";
 import { ProductCreateRequest } from "@/controllers/types/product-request.type";
 
 class ProductRepository {

@@ -1,6 +1,6 @@
 import { ProductCreateRequest } from "@/controllers/types/product-request.type";
-import { IItem } from "@/database/product.model";
-import ProductRepository from "@/database/product.repository";
+import { IItem } from "@/database/models/product.model";
+import ProductRepository from "@/database/repositories/product.repository";
 
 export class ProductService {
   public async createProduct(

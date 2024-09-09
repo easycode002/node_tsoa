@@ -7,6 +7,7 @@ import { ProductService } from "@/services/product.service";
 export class ProductController extends Controller {
   // Create new instance for product Service
   private productService = new ProductService();
+  
   @Post()
   @Response(201, "Created Success")
   public async createItem(
