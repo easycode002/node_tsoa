@@ -9,3 +9,10 @@ export interface ProductUpdateRequest {
   category?: string;
   price?: number;
 }
+
+export interface ProductGetAllRequest {
+  page?: number;
+  limit?: number;
+  filter?: string;
+  sort?: string;
+}

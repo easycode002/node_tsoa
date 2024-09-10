@@ -1,9 +1,10 @@
 import {
   ProductCreateRequest,
+  ProductGetAllRequest,
   ProductUpdateRequest,
 } from "./types/product-request";
-import { ProductResponse } from "@/controllers/types/user-response";
-import { IItem } from "@/database/models/product.model";
+import { ProductResponse } from "@/controllers/types/product-response";
+// import { IItem } from "@/database/models/product.model";
 import { ProductService } from "@/services/product.service";
 import {
   Body,
@@ -17,7 +18,9 @@ import {
   Middlewares,
   Delete,
   Tags,
+  Queries
 } from "tsoa";
+import { ProductPaginatedResponse } from "./types/product-response";
 // import validateRequest from "@/middlewares/validate-input";
 
 @Route("v1/product")
@@ -102,16 +105,33 @@ export class ProductController extends Controller {
   }
 
   // Get all product
+  // @Get()
+  // public async getAllProduct(): Promise<{ message: string; data: IItem[] }> {
+  //   try {
+  //     const product = await this.productService.getAllProduct();
+  //     return {
+  //       message: "All product available.",
+  //       data: product,
+  //     };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
   @Get()
-  public async getAllProduct(): Promise<{ message: string; data: IItem[] }> {
+  public async getAll(@Queries() queries: ProductGetAllRequest): Promise<ProductPaginatedResponse> {
     try {
-      const product = await this.productService.getAllProduct();
+      const response = await this.productService.getAll(queries);
+
       return {
-        message: "All product available.",
-        data: product,
-      };
+        message: "success",
+        data: response
+      }
+
     } catch (error) {
+      console.error(`ProductsController - getAllProducts() method error: ${error}`)
       throw error;
     }
   }
+
 }

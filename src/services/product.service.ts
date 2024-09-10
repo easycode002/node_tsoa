@@ -1,5 +1,6 @@
 import {
   ProductCreateRequest,
+  ProductGetAllRequest,
   ProductUpdateRequest,
 } from "@/controllers/types/product-request";
 import { IItem } from "@/database/models/product.model";
@@ -61,6 +62,26 @@ export class ProductService {
       const product = await ProductRepository.getAllProduct();
       return product;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  // Get all with pagination, sort, filter
+  async getAll(queries: ProductGetAllRequest) {
+    try {
+      const { page, limit, filter, sort } = queries;
+
+      const newQueries = {
+        page,
+        limit,
+        filter: filter && JSON.parse(filter),
+        sort: sort && JSON.parse(sort),
+      };
+      const result = await ProductRepository.getAll(newQueries);
+
+      return result;
+    } catch (error) {
+      console.error(`ProductService - getAllProducts() method error: ${error}`);
       throw error;
     }
   }

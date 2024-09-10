@@ -1,0 +1,11 @@
+export const HTTP_STATUS_CODE = {
+    CREATED: 201,
+    SUCCESS: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORZIED: 401,
+    FORBIDDED: 403,
+    NOT_FOUND: 404,
+    CONFLICT: 400,
+    SERVER_ERROR: 500,
+  };
+  
