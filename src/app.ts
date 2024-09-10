@@ -23,7 +23,7 @@ app.use(express.json()); // Help to get the json from request body
 //  Global API V1
 // =============================================
 RegisterRoutes(app);
-// app.use(RegisterRoutes);
+
 
 // ========================
 // API Documentations

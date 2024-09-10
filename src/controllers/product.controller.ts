@@ -16,10 +16,12 @@ import {
   Put,
   Middlewares,
   Delete,
+  Tags,
 } from "tsoa";
 // import validateRequest from "@/middlewares/validate-input";
 
 @Route("v1/product")
+@Tags("Product")
 export class ProductController extends Controller {
   // Create new product
   private productService = new ProductService();
@@ -51,7 +53,7 @@ export class ProductController extends Controller {
     try {
       const product = await this.productService.getProductById(id);
       if (!product) {
-        throw new Error(' Product not found')
+        throw new Error(" Product not found");
         // this.setStatus(404);
         // return {
         //   message: `Product ID:${id} not found`,
@@ -90,7 +92,7 @@ export class ProductController extends Controller {
 
   // Delete product
   @Delete("{id}")
-  @Response(204,"Product deleted")
+  @Response(204, "Product deleted")
   public async deleteProduct(@Path() id: string): Promise<void> {
     try {
       await this.productService.deleteProduct(id);

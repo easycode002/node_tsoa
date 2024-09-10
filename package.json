@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "tsoa:gen": "tsoa spec && tsoa routes",
-    "dev": "nodemon src/server.ts",
+    "dev": "yarn tsoa:gen && nodemon src/server.ts",
     "build": "node build-script.js",
     "start:local": "NODE_ENV=local node ./build/server.js"
   },

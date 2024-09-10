@@ -25,7 +25,7 @@ esbuild
           { from: "../node_modules/swagger-ui-dist/*", to: "./" },
           {
             from: "./src/configs/.env.local",
-            to: "./configs/.env.development",
+            to: "./configs/.env.production",
           },
         ],
       }),
