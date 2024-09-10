@@ -3,3 +3,9 @@ export interface ProductCreateRequest {
   category: string;
   price: number;
 }
+
+export interface ProductUpdateRequest {
+  name?: string;
+  category?: string;
+  price?: number;
+}

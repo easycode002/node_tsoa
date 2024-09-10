@@ -1,4 +1,7 @@
-import { ProductCreateRequest } from "@/controllers/types/product-request";
+import {
+  ProductCreateRequest,
+  ProductUpdateRequest,
+} from "@/controllers/types/product-request";
 import { IItem } from "@/database/models/product.model";
 import ProductRepository from "@/database/repositories/product.repository";
 
@@ -20,9 +23,42 @@ export class ProductService {
   }
 
   // Get product with specific Id
-  public async getProductById(Id: string) {
+  public async getProductById(id: string) {
     try {
-      const product = ProductRepository.getProductById(Id);
+      const product = ProductRepository.getProductById(id);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Update product
+  public async updateProduct(
+    id: string,
+    productRequest: ProductUpdateRequest
+  ): Promise<IItem> {
+    try {
+      const product = await ProductRepository.updateProduct(id, productRequest);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Delete product
+  public async deleteProduct(id: string): Promise<void> {
+    try {
+      await ProductRepository.deleteProduct(id);
+      console.log(`Product deleted`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Get all product
+  public async getAllProduct() {
+    try {
+      const product = await ProductRepository.getAllProduct();
       return product;
     } catch (error) {
       throw error;

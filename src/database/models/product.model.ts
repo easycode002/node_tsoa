@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 // Define interface for Item Product
 export interface IItem {
@@ -8,12 +8,12 @@ export interface IItem {
 }
 
 // Schema Information
-const itemSchema = new Schema<IItem>({
-  name: { type: String, require: true, unique: true },
-  category: { type: String, require: true },
-  price: { type: Number, require: true },
+const itemSchema = new mongoose.Schema<IItem>({
+  name: { type: String, required: true },
+  category: { type: String, required: true },
+  price: { type: Number, required: true },
 });
 
 // Create a model from itemSchema.
-const ItemModel = model<IItem>("item", itemSchema);
+const ItemModel = mongoose.model<IItem>("item", itemSchema);
 export default ItemModel;

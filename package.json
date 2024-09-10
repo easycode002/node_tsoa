@@ -7,7 +7,7 @@
     "tsoa:gen": "tsoa spec && tsoa routes",
     "dev": "nodemon src/server.ts",
     "build": "node build-script.js",
-    "start:local": "node ./build/server.js"
+    "start:local": "NODE_ENV=local node ./build/server.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
