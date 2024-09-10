@@ -226,6 +226,72 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetAllSupplier",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/ISupplier"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"data",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Supplier"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/supplier/{id}": {
+			"get": {
+				"operationId": "GetSupplierById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ISupplier"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Supplier"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/v1/product": {

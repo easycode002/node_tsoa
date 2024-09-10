@@ -75,9 +75,6 @@
 			},
 			"SupplierCreateRequest": {
 				"properties": {
-					"name": {
-						"type": "string"
-					},
 					"first_name": {
 						"type": "string"
 					},
@@ -99,22 +96,9 @@
 					},
 					"date_of_birth": {
 						"type": "string"
-					},
-					"createAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updateAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"deleteAt": {
-						"type": "string",
-						"format": "date-time"
 					}
 				},
 				"required": [
-					"name",
 					"first_name",
 					"last_name",
 					"gender",
@@ -227,6 +211,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Supplier"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -239,6 +226,41 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetAllSupplier",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/ISupplier"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"data",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Supplier"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/v1/product": {
@@ -259,6 +281,9 @@
 						"description": "Create success"
 					}
 				},
+				"tags": [
+					"Product"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -301,6 +326,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Product"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -335,6 +363,9 @@
 						"description": "Not found"
 					}
 				},
+				"tags": [
+					"Product"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -361,6 +392,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Product"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -390,6 +424,9 @@
 						"description": "No content"
 					}
 				},
+				"tags": [
+					"Product"
+				],
 				"security": [],
 				"parameters": [
 					{

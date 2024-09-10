@@ -12,7 +12,32 @@ class SupplierRepository {
       return supplier;
     } catch (error) {
       // Throw error to Global error
-      console.error(`error in repo`, error);
+      throw error;
+    }
+  }
+
+  // Get all supplier
+  public async getAllSupplier() {
+    try {
+      const supplier = await SupplierModel.find();
+      if (!supplier) {
+        throw new Error(`No product found in database`);
+      }
+      return supplier;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Get supplier By Id
+  public async getSupplierById(id: string): Promise<ISupplier> {
+    try {
+      const supplier = await SupplierModel.findById(id);
+      if (!supplier) {
+        throw new Error(`Supplier ID:${id} not found.`);
+      }
+      return supplier;
+    } catch (error) {
       throw error;
     }
   }

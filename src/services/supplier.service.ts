@@ -16,4 +16,24 @@ export class SupplierService {
       throw error;
     }
   }
+
+  // Create supplier
+  public async getAllSupplier() {
+    try {
+      const supplier = await SupplierRepository.getAllSupplier();
+      return supplier;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Get supplier By Id
+  public async getSupplierById(id: string): Promise<ISupplier> {
+    try {
+      const supplier = await SupplierRepository.getSupplierById(id);
+      return supplier;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
