@@ -23,3 +23,8 @@ silently-remove-extras vs throw-on-extras
     }
   }
 }
+
+
+build
+  - configs
+    . .env.production
