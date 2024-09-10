@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import path from "path";
 import Joi from "joi";
 
-// Define type for load content from .env file
+// Define type for load content from .env file (Just adding lol)
 type Config = {
   env: string;
   port: number;
