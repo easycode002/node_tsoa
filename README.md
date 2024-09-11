@@ -26,5 +26,7 @@ silently-remove-extras vs throw-on-extras
 
 
 build
-  - configs
+  - configs(dir)
     . .env.production
+  - docs(dir)
+  - server.js

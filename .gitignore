@@ -3,3 +3,6 @@ yarn.lock
 
 src/configs/*
 Note.txt
+
+# For production
+build/configs/*
