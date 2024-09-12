@@ -25,8 +25,8 @@ const supplierSchema = new mongoose.Schema<ISupplier>({
   address: { type: String, required: true },
   date_of_birth: { type: Date, default: Date.now() },
   createAt: { type: Date, default: Date.now, required: false },
-  updateAt: { type: Date, required: false },
-  deleteAt: { type: Date, required: false },
+  updateAt: { type: Date, default: null },
+  deleteAt: { type: Date, default: null },
 });
 
 // Define supplier model

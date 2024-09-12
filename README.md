@@ -25,8 +25,55 @@ silently-remove-extras vs throw-on-extras
 }
 
 
-build
-  - configs(dir)
-    . .env.production
-  - docs(dir)
-  - server.js
+
+
+- ProductRepository (Try, Catch, If, Return: No complex)
+  . getAllProduct
+    - Params  : queries:ProductGetAllRepoParams
+    - Promise : No
+  . createProduct
+    - Params  : ProductCreateRequest
+    - Promiss : IItem
+  . getProductById
+    - Params  : id:string
+    - Promise : IItem
+  . updateProduct
+    - Params  : id, ProductUpdateRequest
+    - Promise : IItem
+  . deleteProduct
+    - Params  : id
+    - Promise : void
+
+- ProductSevice
+  . getAllProduct
+    - Params  : queries:ProductGetAllRequest
+    - Promise : No
+  . createProduct
+    - Params  : ProductCreateRequest
+    - Promise : IItem
+  . getProductById
+    - Params  : id:string
+    - Promise : IItem
+  . updateProduct
+    - Params  : id, ProductUpdateRequest
+    - Promise : IItem
+  . deleteProduct
+    - Params  : id
+    - Promise : void
+
+- ProductController
+  . getAllProduct
+    - Params  : queries:ProductGetAllRequest
+    - Promise : ProductPaginatioResponse
+  . createPruduct
+    - requestBody: ProductCreateRequest
+    - Promise : ProductResponse
+  . getProductById
+    - Params  : id
+    - Promise : ProductResponse
+  . updateProduct
+    - Params  : id, requestBody:ProductUpdateRequest
+    - Promise : ProductResponse
+  . deleteProduct
+    - Params  : id (@Path())
+    - Promise : void

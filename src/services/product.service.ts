@@ -6,7 +6,7 @@ import {
 import { IItem } from "@/database/models/product.model";
 import ProductRepository from "@/database/repositories/product.repository";
 
-export class ProductService {
+class ProductService {
   // Create new product
   public async createProduct(
     productRequest: ProductCreateRequest
@@ -24,9 +24,9 @@ export class ProductService {
   }
 
   // Get product with specific Id
-  public async getProductById(id: string) {
+  public async getProductById(id: string): Promise<IItem> {
     try {
-      const product = ProductRepository.getProductById(id);
+      const product = await ProductRepository.getProductById(id);
       return product;
     } catch (error) {
       throw error;
@@ -86,3 +86,5 @@ export class ProductService {
     }
   }
 }
+
+export default new ProductService();

@@ -41,6 +41,46 @@ class SupplierRepository {
       throw error;
     }
   }
+
+  // Update supplier By Id
+  public async updateSupplier(
+    id: string,
+    updateData: Partial<ISupplier>
+  ): Promise<ISupplier> {
+    try {
+      const updateSupplier = await SupplierModel.findByIdAndUpdate(
+        id,
+        {
+          ...updateData,
+          updateAt: new Date(),
+        },
+        { new: true }
+      );
+      if (!updateSupplier) {
+        throw new Error(`Supplier with ID:${id} not found`);
+      }
+      return updateSupplier;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Delete supplier
+  public async deleteSupllier(id: string): Promise<ISupplier> {
+    try {
+      const deletedSupplier = await SupplierModel.findByIdAndUpdate(
+        id,
+        { deleteAt: new Date() },
+        { new: true }
+      );
+      if (!deletedSupplier) {
+        throw new Error(`Supplier ID:${id} not found`);
+      }
+      return deletedSupplier;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // Class export

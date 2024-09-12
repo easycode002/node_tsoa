@@ -2,7 +2,7 @@ import { SupplierCreateRequest } from "@/controllers/types/supplier-request";
 import { ISupplier } from "@/database/models/supplier.model";
 import SupplierRepository from "@/database/repositories/supplier.repository";
 
-export class SupplierService {
+class SupplierService {
   // Create new supplier
   public async createSupplier(
     supplierRequestCreate: SupplierCreateRequest
@@ -21,6 +21,9 @@ export class SupplierService {
   public async getAllSupplier() {
     try {
       const supplier = await SupplierRepository.getAllSupplier();
+      if (!supplier) {
+        throw new Error("No supplier found in the database");
+      }
       return supplier;
     } catch (error) {
       throw error;
@@ -36,4 +39,32 @@ export class SupplierService {
       throw error;
     }
   }
+
+  // Update supplier with Id
+  public async updateSupplier(
+    id: string,
+    updateData: Partial<ISupplier>
+  ) {
+    try {
+      const updateSupplier = await SupplierRepository.updateSupplier(
+        id,
+        updateData
+      );
+      return updateSupplier;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Delete supplier
+  public async deleteSupplier(id: string): Promise<ISupplier> {
+    try {
+      const supplier = await SupplierRepository.deleteSupllier(id);
+      return supplier;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
+export default new SupplierService

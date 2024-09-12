@@ -4,3 +4,7 @@ export interface SupplierResponse {
   message: string;
   data: ISupplier;
 }
+
+export interface TestSupplierResponse{
+  message:string;
+}

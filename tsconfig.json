@@ -17,10 +17,10 @@
     "alwaysStrict": true, //Ensures that the "use strict" directive is added to every file
     "pretty": true, // Ensures the TypeScript compiler output is more readable and user-friendly.
     // Import file from the root directory using `@` prefix
-    "baseUrl": "./src", // Added: New
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
-    }
+      "@/*": ["src/*"]
+    }                
   },
   "include": ["src/**/*"], //Includes all files inside the `src` folder
   "exclude": ["node_modules", "**/*.spec.ts"], //Excludes the node_modules directory and all .spec.ts test files from the TypeScript compilation.

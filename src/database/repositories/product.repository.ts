@@ -23,7 +23,7 @@ class ProductRepository {
   }
 
   // Get single product, (Get by Id)
-  public async getProductById(id: string): Promise<IItem | null> {
+  public async getProductById(id: string): Promise<IItem> {
     try {
       // Get product specific Id
       const product = await ItemModel.findById(id).lean();

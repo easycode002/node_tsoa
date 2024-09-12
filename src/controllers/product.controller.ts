@@ -1,11 +1,11 @@
 import {
   ProductCreateRequest,
-  ProductGetAllRequest,
+  // ProductGetAllRequest,
   ProductUpdateRequest,
 } from "./types/product-request";
 import { ProductResponse } from "@/controllers/types/product-response";
 // import { IItem } from "@/database/models/product.model";
-import { ProductService } from "@/services/product.service";
+import ProductService from "@/services/product.service";
 import {
   Body,
   Controller,
@@ -18,26 +18,34 @@ import {
   Middlewares,
   Delete,
   Tags,
-  Queries
+  // Queries,
+  Example,
 } from "tsoa";
-import { ProductPaginatedResponse } from "./types/product-response";
+// import { ProductPaginatedResponse } from "./types/product-response";
 // import validateRequest from "@/middlewares/validate-input";
 
 @Route("v1/product")
 @Tags("Product")
 export class ProductController extends Controller {
   // Create new product
-  private productService = new ProductService();
   @Post()
   @Response(201, "Create success")
   @Middlewares()
+  @Example<ProductResponse>({
+    message: "Product created",
+    data: {
+      name: "Apple",
+      category: "Vegetable",
+      price: 12,
+    },
+  })
   public async createItem(
     @Body() requestBody: ProductCreateRequest
   ): Promise<ProductResponse> {
     try {
-      const newProduct = await this.productService.createProduct(requestBody);
+      const newProduct = await ProductService.createProduct(requestBody);
       return {
-        message: "Prodct created!",
+        message: "Product created",
         data: {
           name: newProduct.name,
           category: newProduct.category,
@@ -52,17 +60,9 @@ export class ProductController extends Controller {
   // Get single product with id
   @Get("{id}")
   @Response(404, "Not found")
-  public async getProductById(@Path() id: string) {
+  public async getProductById(@Path() id: string): Promise<ProductResponse> {
     try {
-      const product = await this.productService.getProductById(id);
-      if (!product) {
-        throw new Error(" Product not found");
-        // this.setStatus(404);
-        // return {
-        //   message: `Product ID:${id} not found`,
-        //   data: null,
-        // };
-      }
+      const product = await ProductService.getProductById(id);
       console.log(id);
       return {
         message: "All product avaible in database",
@@ -80,10 +80,7 @@ export class ProductController extends Controller {
     @Body() requestBody: ProductUpdateRequest
   ): Promise<ProductResponse> {
     try {
-      const newProduct = await this.productService.updateProduct(
-        id,
-        requestBody
-      );
+      const newProduct = await ProductService.updateProduct(id, requestBody);
       return {
         message: `Product Id:${id} updated!`,
         data: newProduct,
@@ -98,40 +95,42 @@ export class ProductController extends Controller {
   @Response(204, "Product deleted")
   public async deleteProduct(@Path() id: string): Promise<void> {
     try {
-      await this.productService.deleteProduct(id);
+      await ProductService.deleteProduct(id);
     } catch (error) {
       throw error;
     }
   }
 
   // Get all product
-  // @Get()
-  // public async getAllProduct(): Promise<{ message: string; data: IItem[] }> {
-  //   try {
-  //     const product = await this.productService.getAllProduct();
-  //     return {
-  //       message: "All product available.",
-  //       data: product,
-  //     };
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-
   @Get()
-  public async getAll(@Queries() queries: ProductGetAllRequest): Promise<ProductPaginatedResponse> {
+  public async getAllProduct() {
     try {
-      const response = await this.productService.getAll(queries);
-
+      const product = await ProductService.getAllProduct();
       return {
-        message: "success",
-        data: response
-      }
-
+        message: "All product available.",
+        data: product,
+      };
     } catch (error) {
-      console.error(`ProductsController - getAllProducts() method error: ${error}`)
       throw error;
     }
   }
 
+  // @Get()
+  // public async getAll(
+  //   @Queries() queries: ProductGetAllRequest
+  // ): Promise<ProductPaginatedResponse> {
+  //   try {
+  //     const response = await ProductService.getAll(queries);
+
+  //     return {
+  //       message: "success",
+  //       data: response,
+  //     };
+  //   } catch (error) {
+  //     console.error(
+  //       `ProductsController - getAllProducts() method error: ${error}`
+  //     );
+  //     throw error;
+  //   }
+  // }
 }
