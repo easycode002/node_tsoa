@@ -1,8 +1,7 @@
 const esbuild = require("esbuild");
-const path = require("path");
+const { copy } = require("esbuild-plugin-copy");
 const fs = require("fs-extra");
-const copy = require("esbuild-plugin-copy").default;
-
+const path = require("path");
 // Issure
 // 1. Esbuild could not load swagger.json
 // 2. SwaggerUIBundle is not define in production.
@@ -20,16 +19,27 @@ esbuild
     // (2) Solve: https://stackoverflow.com/questions/62136515/swagger-ui-express-plugin-issue-with-webpack-bundling-in-production-mode/63048697#63048697
     plugins: [
       copy({
-        assets: [
-          // Copy swagger UI assets and env file
-          { from: "../node_modules/swagger-ui-dist/*", to: "./" },
-          {
-            from: "./src/configs/.env.local",
-            to: "./configs/.env.production",
-          },
-        ],
+          resolveFrom: "cwd",
+          assets: [
+              {
+                  from: ["node_modules/swagger-ui-dist/*"],
+                  to: ["build/swagger-ui-dist"],
+              },
+              {
+                  from: ["src/docs/swagger.json"],
+                  to: ["build/docs/swagger.json"],
+              },
+              {
+                from: "./src/configs/.env.local",
+                to: "./configs/.env.production",
+              },
+              {
+                  from: ["ecosystem.config.js"],
+                  to: ["build/ecosystem.config.js"],
+              },
+          ],
       }),
-    ],
+  ],
     resolveExtensions: [".ts", ".js"],
     define: {
       "process.env.NODE_ENV": JSON.stringify(
@@ -47,6 +57,13 @@ esbuild
       path.resolve(__dirname, "src/docs/swagger.json"),
       path.resolve(__dirname, "build/docs/swagger.json")
     );
+    console.log("Swagger Copy")
+    fs.copySync(
+      path.resolve(__dirname, "src/configs/.env.local"),
+      path.resolve(__dirname, "build/configs/.env.production")
+  );
+  console.log("env Copy")
+
     console.log("Swagger JSON copied successfully!");
   })
   .catch((error) => {
