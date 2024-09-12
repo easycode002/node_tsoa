@@ -1,6 +1,7 @@
 {
   "entryFile": "src/server.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
+  "noImplicitAdditional": true,
   "controllerPathGlobs": ["src/controllers/**/*.controller.ts"],
   "spec": {
     "outputDirectory": "src/docs",
@@ -10,9 +11,13 @@
     "routesDir": "src/routes/v1"
   },
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"]
     }
+  },
+  "additionalProperties": false,
+  "typeMapping": {
+    "ObjectId": "string"
   }
 }

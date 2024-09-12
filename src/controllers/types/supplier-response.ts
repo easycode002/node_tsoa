@@ -5,6 +5,7 @@ export interface SupplierResponse {
   data: ISupplier;
 }
 
+
 export interface TestSupplierResponse{
   message:string;
 }

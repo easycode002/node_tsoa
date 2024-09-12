@@ -1,5 +1,5 @@
 // Import module need
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 // Define interface for supplier
 export interface ISupplier {
@@ -15,8 +15,11 @@ export interface ISupplier {
   deleteAt?: Date;
 }
 
+// Define interface for mongoDb document
+export interface ISupplierModel extends ISupplier, Document {}
+
 // Define schema
-const supplierSchema = new mongoose.Schema<ISupplier>({
+const supplierSchema = new mongoose.Schema<ISupplierModel>({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
   gender: { type: Number, required: true },
@@ -30,5 +33,8 @@ const supplierSchema = new mongoose.Schema<ISupplier>({
 });
 
 // Define supplier model
-const SupplierModel = mongoose.model("supplier", supplierSchema);
+const SupplierModel = mongoose.model<ISupplierModel>(
+  "supplier",
+  supplierSchema
+);
 export default SupplierModel;

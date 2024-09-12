@@ -13,11 +13,12 @@ class ProductService {
   ): Promise<IItem> {
     try {
       const newProduct = await ProductRepository.createProduct(productRequest);
-      return {
-        name: newProduct.name,
-        category: newProduct.category,
-        price: newProduct.price,
-      };
+      // return {
+      //   name: newProduct.name,
+      //   category: newProduct.category,
+      //   price: newProduct.price,
+      // };
+      return newProduct;
     } catch (error) {
       throw error;
     }

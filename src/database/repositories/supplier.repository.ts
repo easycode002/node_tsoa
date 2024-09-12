@@ -1,5 +1,8 @@
 import { SupplierCreateRequest } from "@/controllers/types/supplier-request";
-import SupplierModel, { ISupplier } from "@/database/models/supplier.model";
+import SupplierModel, {
+  ISupplier,
+  ISupplierModel,
+} from "@/database/models/supplier.model";
 
 // Define supplier class for handle CRUD operation
 class SupplierRepository {
@@ -8,8 +11,10 @@ class SupplierRepository {
     supplierRequestCreate: SupplierCreateRequest
   ): Promise<ISupplier> {
     try {
-      const supplier = await SupplierModel.create(supplierRequestCreate);
-      return supplier;
+      const supplier: ISupplierModel = await SupplierModel.create(
+        supplierRequestCreate
+      );
+      return supplier.toObject();
     } catch (error) {
       // Throw error to Global error
       throw error;
